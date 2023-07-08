@@ -34,6 +34,7 @@ elPagination.addEventListener('click', (e) => {
 function renderArticles(items) {
     let html = '';
     items.forEach(item => {
+        const publishDateFormatted = dayjs(item.publish_date).fromNow();
         html += /*html*/ `
         <article class="item post col-md-6 col-lg-4">
             <div class="card h-100">
@@ -59,7 +60,7 @@ function renderArticles(items) {
                      <!--/.card-body -->
                     <div class="card-footer">
                         <ul class="post-meta d-flex mb-0">
-                            <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${item.publish_date}</span></li>
+                            <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${publishDateFormatted}</span></li>
                             <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>${item.views}</a></li>
                             <li class="post-likes ms-auto"><a href="#"><i class="uil uil-heart-alt"></i>${item.status}</a></li>
                         </ul>
@@ -109,4 +110,9 @@ function fetchArticles(page = 1) {
             renderArticles(data);
         });
 
+}
+
+function renderDate(date) {
+    moment.locale("vi");
+    return moment(date).fromNow();
 }

@@ -12,12 +12,10 @@ fetchArticlesLatest();
 API.get('articles/popular?limit=7')
     .then((res) => {
         const data = res.data.data;
-
-
         let htmlTop = '';
         let htmlBot = '';
-
         data.forEach((item, index) => {
+            const publishDateFormatted = dayjs(item.publish_date).fromNow();
             if (index < 2) {
                 htmlTop += /*html*/ `
                 <div class="col-lg-6 mb-4">
@@ -28,7 +26,7 @@ API.get('articles/popular?limit=7')
                         <h2 class="post-title h3 mt-1 mb-3"><a href="./blog-post.html">${item.title}</a></h2>
                         <ul class="post-meta text-white mb-0">
                             <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${item.author}</span></li>
-                            <li class="post-author"><a href="#"><i class="uil uil-user"></i><span>${item.publish_date}</span></a></li>
+                            <li class="post-author"><a href="#"><i class="uil uil-user"></i><span>${publishDateFormatted}</span></a></li>
                             <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>3<span>${item.views}</span></a></li>
                         </ul>
                     </figcaption>
@@ -46,7 +44,7 @@ API.get('articles/popular?limit=7')
                 <div class="post-content">
                     <h6 class="mb-2 "> <a class="link-dark line-clamp line-clamp-1" title="${item.title}" href="./blog-post.html">${item.title}</a></h6>
                     <ul class="post-meta">
-                        <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${item.publish_date}</span></li>
+                        <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${publishDateFormatted}</span></li>
                         <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>${item.views}</a></li>
                     </ul>
                     <!-- /.post-meta -->
@@ -60,7 +58,6 @@ API.get('articles/popular?limit=7')
     });
 
 
-
 btnLoadMore.addEventListener('click', () => {
     btnLoadMore.innerText = 'Đang tải thêm...';
     btnLoadMore.disabled = true;
@@ -71,7 +68,9 @@ btnLoadMore.addEventListener('click', () => {
 
 function renderArticlesLatest(items) {
     let html = '';
+
     items.forEach(item => {
+        const publishDateFormatted = dayjs(item.publish_date).fromNow();
         html += /*html*/ `
         <article class="item post col-md-6">
         <div class="card shadow-lg h-100">
@@ -98,7 +97,7 @@ function renderArticlesLatest(items) {
             <!--/.card-body -->
             <div class="card-footer">
                 <ul class="post-meta d-flex mb-0">
-                    <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${item.publish_date}</span></li>
+                    <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${publishDateFormatted}</span></li>
                     <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>${item.views}</a></li>
                     <li class="post-likes ms-auto"><a href="#"><i class="uil uil-heart-alt"></i>${item.status}</a></li>
                 </ul>

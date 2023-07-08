@@ -8,6 +8,7 @@ let currentPage = 1;
 const params = new URLSearchParams(window.location.search);
 const keyword = params.get('keyword');
 
+
 fetchArticles();
 
 
@@ -32,9 +33,24 @@ elPagination.addEventListener('click', (e) => {
 })
 
 
+
 function renderArticles(items) {
     let html = '';
+
     items.forEach(item => {
+        const publishDateFormatted = dayjs(item.publish_date).fromNow();
+        let description = item.description;
+        let title = item.title;
+        if (keyword) {
+            let patt = new RegExp(keyword, 'igm');
+            description = description.replace(patt, (match) => {
+                return `<mark>${match}</mark>`
+            })
+            title = title.replace(patt, (match) => {
+                return `<mark>${match}</mark>`
+            })
+
+        }
         html += /*html*/ `
         <article class="item post col-md-6 col-lg-4">
             <div class="card h-100">
@@ -49,18 +65,18 @@ function renderArticles(items) {
                     <div class="card-body">
                         <div class="post-header">
                             <!-- /.post-category -->
-                            <h2 class="post-title h3 mt-1 mb-3"><a class="link-dark" href="./blog-post.html">${item.title}</a></h2>
+                            <h2 class="post-title h3 mt-1 mb-3"><a class="link-dark" href="./blog-post.html">${title}</a></h2>
                         </div>
                         <!-- /.post-header -->
                         <div class="post-content">
-                             <p>${item.description}</p>
+                             <p>${description}</p>  
                         </div>
                         <!-- /.post-content -->
                     </div>
                      <!--/.card-body -->
                     <div class="card-footer">
                         <ul class="post-meta d-flex mb-0">
-                            <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${item.publish_date}</span></li>
+                            <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${publishDateFormatted}</span></li>
                             <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>${item.views}</a></li>
                             <li class="post-likes ms-auto"><a href="#"><i class="uil uil-heart-alt"></i>${item.status}</a></li>
                         </ul>
@@ -109,6 +125,7 @@ function renderPagination(totalPage) {
             `;
 }
 
+
 function fetchArticles(page = 1) {
 
     API.get(`articles/search?q=${keyword}&limit=6&page=${page}`)
@@ -120,4 +137,16 @@ function fetchArticles(page = 1) {
             renderArticles(data);
         });
 
+}
+
+
+
+
+
+function highlight(str, keyword) {
+    if (keyword) {
+        const regex = new RegExp(keyword, "gim");
+        return str.replace(regex, (match) => "<mark>" + match + "</mark>");
+    }
+    return str;
 }
