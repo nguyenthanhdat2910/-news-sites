@@ -6,7 +6,8 @@ const elCategoryName = document.getElementById('category-name');
 let currentPage = 1;
 
 const params = new URLSearchParams(window.location.search);
-const id = parseInt(params.get('id'));
+const keyword = params.get('keyword');
+
 fetchArticles();
 
 
@@ -70,6 +71,15 @@ function renderArticles(items) {
                  <!-- /.card -->
         </article>`;
     });
+    let searchValue = '';
+    if (searchValue !== '') {
+        //eat
+        // <mark>e</marl>ating
+        const regex = new RegExp(searchValue, 'gim');
+        todoName = todoName.replace(regex, (match) => {
+            return `<mark>${match}</mark>`
+        })
+    }
 
     elSectionArticle.innerHTML = html;
 
@@ -101,10 +111,11 @@ function renderPagination(totalPage) {
 
 function fetchArticles(page = 1) {
 
-    API.get(`categories_news/${id}/articles?limit=6&page=${page}`)
+    API.get(`articles/search?q=${keyword}&limit=6&page=${page}`)
         .then((res) => {
             const data = res.data.data;
             const totalPage = res.data.meta.last_page;
+
             renderPagination(totalPage);
             renderArticles(data);
         });

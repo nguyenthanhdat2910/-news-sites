@@ -1,5 +1,4 @@
 const elArticlesLatest = document.getElementById('articles-latest');
-const elMenu = document.getElementsByClassName('main-menu');
 const elArticlesPopular = document.getElementById('articles-popular');
 const elImageList = document.getElementById('image-list');
 const btnLoadMore = document.getElementById('btn-load-more');

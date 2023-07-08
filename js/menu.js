@@ -1,8 +1,23 @@
+const elMenu = document.getElementsByClassName('main-menu');
+
+
 API.get('categories_news')
     .then(res => {
         const data = res.data.data;
         renderMenu(data);
     });
+
+
+// chuyen ve unicode search 
+const searchForm = document.getElementsByClassName('search-form');
+for (let i = 0; i < searchForm.length; i++) {
+    searchForm[i].addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inputKeyword = searchForm[i].querySelector('[name="keyword"]');
+        const value = encodeURIComponent(inputKeyword.value);
+        window.location.href = `search.html?keyword=${value}`;
+    })
+}
 
 
 function renderMenu(items) {
@@ -12,11 +27,11 @@ function renderMenu(items) {
         if (index < 3) {
             htmlMenu += `
                     <li class="nav-item">
-                        <a class="nav-link" href="#">${item.name}</a>
+                        <a class="nav-link" href="category.html?id=${item.id}">${item.name}</a>
                     </li>`;
         } else {
             htmlOtherMenu += `
-                        <li class="nav-item"><a class="dropdown-item" href="#">${item.name}</a></li>
+                        <li class="nav-item"><a class="dropdown-item" href="category.html?id=${item.id}">${item.name}</a></li>
                     `;
         }
     });
