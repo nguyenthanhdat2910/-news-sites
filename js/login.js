@@ -23,8 +23,8 @@ elFrom.addEventListener('submit', (e) => {
     API.post('auth/login', {
         email: email,
         password: password
-    }).then(res => {
-        localStorage.setItem(ACCESS_TOKEN, res.data.access_token);
+    }).then(resLogin => {
+        localStorage.setItem(ACCESS_TOKEN, resLogin.data.access_token);
         window.location.href = 'index.html';
     }).catch((err) => {
         elMessage.innerHTML = /* html*/
