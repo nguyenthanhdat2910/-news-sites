@@ -36,31 +36,41 @@ function renderMenu(items) {
         }
     });
 
-    let htmlAccountMenu = `
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Tài khoản</a>
-        <ul class="dropdown-menu">
-            <li class="nav-item"><a class="dropdown-item" href="login.html">Đăng nhập</a></li>
-            <li class="nav-item"><a class="dropdown-item" href="register.html">Đăng ký</a></li>
-        </ul>
-    </li>
-    `
-    if (token) {
-        htmlAccountMenu = `
+    loginName = '';
+    API.get('auth/me', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }).then(res => {
+        loginName = res.data.data.name
+    }).catch(err => {
+        console.log(err);
+    }).finally(() => {
+
+        let htmlAccountMenu = `
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Admin</a>
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Tài khoản</a>
             <ul class="dropdown-menu">
-                <li class="nav-item"><a class="dropdown-item" href="login.html">Thông tin tài khoản</a></li>
-                <li class="nav-item"><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                <li class="nav-item"><a class="dropdown-item" href="login.html">Đăng nhập</a></li>
+                <li class="nav-item"><a class="dropdown-item" href="register.html">Đăng ký</a></li>
             </ul>
         </li>
-        `
-    }
+        `;
+        if (loginName) {
+            htmlAccountMenu = `
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">${loginName}</a>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item"><a class="dropdown-item" href="profile.html">Thông tin tài khoản</a></li>
+                        <li class="nav-item"><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                    </ul>
+                </li>
+        `;
+        };
 
-
-    for (let i = 0; i < elMenu.length; i++) {
-        elMenu[i].innerHTML = /*html*/
-            htmlMenu + ` 
+        for (let i = 0; i < elMenu.length; i++) {
+            elMenu[i].innerHTML = /*html*/
+                htmlMenu + ` 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Danh Mục Khác </a>
                     <ul class="dropdown-menu">
@@ -69,5 +79,6 @@ function renderMenu(items) {
                 </li>
                 ${htmlAccountMenu}
                 `;
-    }
+        };
+    })
 }
