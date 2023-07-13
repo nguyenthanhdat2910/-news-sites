@@ -1,4 +1,4 @@
-const elMenu = document.getElementsByClassName('main-menu');
+const elMenu = document.getElementsByClassName('main-menu')
 
 
 API.get('categories_news')
@@ -35,14 +35,39 @@ function renderMenu(items) {
                     `;
         }
     });
+
+    let htmlAccountMenu = `
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Tài khoản</a>
+        <ul class="dropdown-menu">
+            <li class="nav-item"><a class="dropdown-item" href="login.html">Đăng nhập</a></li>
+            <li class="nav-item"><a class="dropdown-item" href="register.html">Đăng ký</a></li>
+        </ul>
+    </li>
+    `
+    if (token) {
+        htmlAccountMenu = `
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Admin</a>
+            <ul class="dropdown-menu">
+                <li class="nav-item"><a class="dropdown-item" href="login.html">Thông tin tài khoản</a></li>
+                <li class="nav-item"><a class="dropdown-item" href="#">Đăng xuất</a></li>
+            </ul>
+        </li>
+        `
+    }
+
+
     for (let i = 0; i < elMenu.length; i++) {
-        elMenu[i].innerHTML =
+        elMenu[i].innerHTML = /*html*/
             htmlMenu + ` 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Danh Mục Khác </a>
                     <ul class="dropdown-menu">
                         <li class="nav-item"><a class="dropdown-item" href="#">${htmlOtherMenu}</a></li>
                     </ul>
-                </li>`;
+                </li>
+                ${htmlAccountMenu}
+                `;
     }
 }
