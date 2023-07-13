@@ -1,3 +1,11 @@
+API.get('auth/me', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+}).then(res => {
+    window.location.href = 'index.html';
+})
+
 const elFrom = document.getElementById('login-from');
 const inputName = document.getElementById('name');
 const inputEmail = document.getElementById('email');
