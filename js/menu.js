@@ -10,6 +10,19 @@ API.get('categories_news')
 
 // chuyen ve unicode search 
 const searchForm = document.getElementsByClassName('search-form');
+
+
+document.addEventListener('click', (e) => {
+    const el = e.target;
+
+    if (el.classList.contains('btn-logout')) {
+        localStorage.removeItem(ACCESS_TOKEN);
+        window.location.href = 'index.html'
+    }
+})
+
+
+
 for (let i = 0; i < searchForm.length; i++) {
     searchForm[i].addEventListener('submit', (e) => {
         e.preventDefault();
@@ -62,7 +75,7 @@ function renderMenu(items) {
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">${loginName}</a>
                     <ul class="dropdown-menu">
                         <li class="nav-item"><a class="dropdown-item" href="profile.html">Thông tin tài khoản</a></li>
-                        <li class="nav-item"><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                        <li class="nav-item"><a class="dropdown-item btn-logout" href="#">Đăng xuất</a></li>
                     </ul>
                 </li>
         `;
