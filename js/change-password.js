@@ -8,36 +8,29 @@ API.get('auth/me', {
     window.location.href = 'index.html';
 });
 
-const inputName = document.getElementById('name');
-const inputEmail = document.getElementById('email');
-const inputPhone = document.getElementById('phone');
-const inputAddress = document.getElementById('address');
+
+
+
 const elForm = document.getElementById('login-from');
 const elMessage = document.getElementById('message');
+const inputPasswordCurrent = document.getElementById('password-current');
+const inputPassword = document.getElementById('password');
+const inputPasswordConfirmation = document.getElementById('password-confirmation');
 
 
-API.get('auth/me', {
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-}).then(res => {
-    const useInfo = res.data.data
-    inputName.value = useInfo.name;
-    inputEmail.value = useInfo.email;
-    inputPhone.value = useInfo.phone;
-    inputAddress.value = useInfo.address;
 
-})
+
+
 
 elForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const data = {
-        name: inputName.value.trim(),
-        phone: inputPhone.value.trim(),
-        address: inputAddress.value.trim()
+        password_current: inputPasswordCurrent.value.trim(),
+        password: inputPassword.value.trim(),
+        password_confirmation: inputPasswordConfirmation.value.trim()
     };
-    API.put('auth/update', data, {
+    API.put('auth/change-password', data, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -45,10 +38,13 @@ elForm.addEventListener('submit', (e) => {
         elMessage.innerHTML = /* html*/
             `
             <div class="alert alert-success alert-icon alert-dismissible fade show" role="alert">
-            <i class="fa-solid fa-check mt-1"></i></i> Cập nhật thành công
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            <i class="fa-solid fa-check mt-1"></i> Cập nhật thành công
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         `
+        inputPasswordCurrent.value = '';
+        inputPassword.value = '';
+        inputPasswordConfirmation.value = '';
     }).catch((err) => {
         let message = '';
         const errors = err.response.data.errors;
@@ -61,6 +57,7 @@ elForm.addEventListener('submit', (e) => {
         elMessage.innerHTML =
             `
         <div class="alert alert-danger alert-icon alert-dismissible fade show" role="alert">
+           
             ${message}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
