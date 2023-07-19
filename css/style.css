@@ -25,3 +25,12 @@
 mark {
     background-color: yellow;
 }
+
+.ck-editor__editable[role="textbox"] {
+    min-height: 300px;
+}
+
+.ck-content .image {
+    max-width: 80%;
+    margin: 20px auto;
+}

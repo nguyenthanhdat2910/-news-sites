@@ -10,6 +10,14 @@ API.get('auth/me', {
 
 
 
+ClassicEditor
+    .create(document.querySelector('#content'))
+    .catch(error => {
+        console.error(error);
+    });
+
+
+
 const elForm = document.getElementById('login-from');
 const elMessage = document.getElementById('message');
 const inputThumb = document.getElementById('thumb');
