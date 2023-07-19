@@ -2,11 +2,25 @@ const elSectionArticle = document.getElementById('section-article');
 const elPagination = document.getElementById('pagination');
 const elCategoryName = document.getElementById('category-name');
 
-
-let currentPage = 1;
-
 const params = new URLSearchParams(window.location.search);
 const id = parseInt(params.get('id'));
+
+
+
+
+let currentPage = 1;
+const PAGE_RANGE = 5;
+let start = 1;
+let end = PAGE_RANGE;
+
+
+
+
+
+
+
+
+
 fetchArticles();
 
 
@@ -20,11 +34,19 @@ elPagination.addEventListener('click', (e) => {
     }
     if (el.classList.contains('btn-next')) {
         currentPage++
+        if (currentPage % PAGE_RANGE === 1) {
+            start = currentPage;
+            end += PAGE_RANGE;
+        }
         fetchArticles(currentPage);
         window.scrollTo(0, 0);
     }
     if (el.classList.contains('btn-prev')) {
         currentPage--
+        if (currentPage % PAGE_RANGE === 0) {
+            end = currentPage;
+            start = end - PAGE_RANGE + 1;
+        }
         fetchArticles(currentPage);
         window.scrollTo(0, 0);
     }
@@ -61,8 +83,8 @@ function renderArticles(items) {
                     <div class="card-footer">
                         <ul class="post-meta d-flex mb-0">
                             <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${publishDateFormatted}</span></li>
-                            <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>${item.views}</a></li>
-                            <li class="post-likes ms-auto"><a href="#"><i class="uil uil-heart-alt"></i>${item.status}</a></li>
+                            <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>${item.status}</a></li>
+                            <li class="post-likes ms-auto"><a href="#"><i class="uil uil-heart-alt"></i>${item.id}</a></li>
                         </ul>
                         <!-- /.post-meta -->
                     </div>
@@ -80,7 +102,10 @@ function renderPagination(totalPage) {
     let html = '';
     const disabledBtnNext = currentPage === totalPage ? 'disabled' : '';
     const disabledBtnPrev = currentPage === 1 ? 'disabled' : '';
-    for (let i = 1; i <= totalPage; i++) {
+
+    if (end > totalPage) end = totalPage;
+
+    for (let i = start; i <= end; i++) {
         const active = currentPage === i ? 'active' : '';
         html += `<li class="page-item ${active}"><a class="page-link zvn-page-item " href="#">${i}</a></li>`;
     }
