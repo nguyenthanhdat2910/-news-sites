@@ -3,10 +3,14 @@ const elPagination = document.getElementById('pagination');
 const elCategoryName = document.getElementById('category-name');
 
 
-let currentPage = 1;
-
 const params = new URLSearchParams(window.location.search);
 const keyword = params.get('keyword');
+
+
+let currentPage = 1;
+const PAGE_RANGE = 5;
+let start = 1;
+let end = PAGE_RANGE;
 
 
 fetchArticles();
@@ -22,11 +26,19 @@ elPagination.addEventListener('click', (e) => {
     }
     if (el.classList.contains('btn-next')) {
         currentPage++
+        if (currentPage % PAGE_RANGE === 1) {
+            start = currentPage;
+            end += PAGE_RANGE;
+        }
         fetchArticles(currentPage);
         window.scrollTo(0, 0);
     }
     if (el.classList.contains('btn-prev')) {
         currentPage--
+        if (currentPage % PAGE_RANGE === 0) {
+            end = currentPage;
+            start = end - PAGE_RANGE + 1;
+        }
         fetchArticles(currentPage);
         window.scrollTo(0, 0);
     }
@@ -55,7 +67,7 @@ function renderArticles(items) {
         <article class="item post col-md-6 col-lg-4">
             <div class="card h-100">
                 <figure class="card-img-top overlay overlay-1 hover-scale">
-                    <a href="#">
+                    <a href="detail.html?id=${item.id}">
                         <img src="${item.thumb}" alt="" />
                     </a>
                     <figcaption>
@@ -65,7 +77,7 @@ function renderArticles(items) {
                     <div class="card-body">
                         <div class="post-header">
                             <!-- /.post-category -->
-                            <h2 class="post-title h3 mt-1 mb-3"><a class="link-dark" href="./blog-post.html">${title}</a></h2>
+                            <h2 class="post-title h3 mt-1 mb-3"><a class="link-dark" href="detail.html?id=${item.id}">${title}</a></h2>
                         </div>
                         <!-- /.post-header -->
                         <div class="post-content">
@@ -105,7 +117,10 @@ function renderPagination(totalPage) {
     let html = '';
     const disabledBtnNext = currentPage === totalPage ? 'disabled' : '';
     const disabledBtnPrev = currentPage === 1 ? 'disabled' : '';
-    for (let i = 1; i <= totalPage; i++) {
+
+    if (end > totalPage) end = totalPage;
+
+    for (let i = start; i <= end; i++) {
         const active = currentPage === i ? 'active' : '';
         html += `<li class="page-item ${active}"><a class="page-link zvn-page-item " href="#">${i}</a></li>`;
     }

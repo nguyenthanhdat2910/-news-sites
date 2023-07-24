@@ -61,7 +61,7 @@ function renderArticles(items) {
         <article class="item post col-md-6 col-lg-4">
             <div class="card h-100">
                 <figure class="card-img-top overlay overlay-1 hover-scale">
-                    <a href="#">
+                    <a href="detail.html?id=${item.id}">
                         <img src="${item.thumb}" alt="" />
                     </a>
                     <figcaption>
@@ -71,7 +71,7 @@ function renderArticles(items) {
                     <div class="card-body">
                         <div class="post-header">
                             <!-- /.post-category -->
-                            <h2 class="post-title h3 mt-1 mb-3"><a class="link-dark" href="./blog-post.html">${item.title}</a></h2>
+                            <h2 class="post-title h3 mt-1 mb-3"><a class="link-dark" href="detail.html?id=${item.id}">${item.title}</a></h2>
                         </div>
                         <!-- /.post-header -->
                         <div class="post-content">

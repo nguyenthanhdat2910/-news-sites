@@ -26,6 +26,18 @@ const inputDescription = document.getElementById('description');
 const inputCategory = document.getElementById('category_id');
 const inputContent = document.getElementById('content');
 const elImg = document.getElementById('thumb-preview');
+const btnRandomThumb = document.getElementById('random-thumb');
+
+
+btnRandomThumb.addEventListener('click', (e) => {
+    axios.get('https://api.unsplash.com/photos/random/?orientation=landscape&client_id=3IEQ63v5yC_VEY1GPM5SJcmA-zkwcrS-3JZFOuQ-kw0')
+        .then((res) => {
+            console.log(res);
+            const urlImg = res.data.urls.regular;
+            elImg.src = urlImg;
+            inputThumb.value = urlImg;
+        })
+})
 
 
 inputThumb.addEventListener('change', (e) => {
@@ -61,11 +73,7 @@ elForm.addEventListener('submit', (e) => {
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         `
-        inputThumb.value = '';
-        inputTitle.value = '';
-        inputDescription.value = '';
-        inputCategory.value = '';
-        inputContent.value = '';
+
 
     }).catch((err) => {
         let message = '';

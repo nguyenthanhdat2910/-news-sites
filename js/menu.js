@@ -57,7 +57,7 @@ function renderMenu(items) {
     }).then(res => {
         loginName = res.data.data.name
     }).catch(err => {
-        console.log(err);
+
     }).finally(() => {
 
         let htmlAccountMenu = `
@@ -76,6 +76,7 @@ function renderMenu(items) {
                     <ul class="dropdown-menu">
                         <li class="nav-item"><a class="dropdown-item" href="profile.html">Thông tin tài khoản</a></li>
                         <li class="nav-item"><a class="dropdown-item" href="change-password.html">Thay đổi mật khẩu</a></li>
+                        <li class="nav-item"><a class="dropdown-item" href="admin-post-management.html">Quản lý bài viết</a></li>
                         <li class="nav-item"><a class="dropdown-item" href="admin-post-create.html">Thêm bài viết</a></li>
                         <li class="nav-item"><a class="dropdown-item btn-logout" href="#">Đăng xuất</a></li>
                     </ul>
