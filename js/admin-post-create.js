@@ -60,7 +60,7 @@ elForm.addEventListener('submit', (e) => {
         description,
         category_id,
         content
-    };
+    }
     API.post('/articles/create', data, {
         headers: {
             Authorization: `Bearer ${token}`

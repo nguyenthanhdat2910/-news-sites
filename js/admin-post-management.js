@@ -28,11 +28,10 @@ API.get('/articles/my-articles', {
                 <td>${item.id}</td>
                 <td><img style="width: 150px" src="${item.thumb}" class="img-fluid" alt=""></td>
                 <td>${item. title}</td>
-                <td>
-                    ${renderSlbCategory(item.category_id)}
+                <td data-id=${item.id}>${renderSlbCategory(item.category_id)}
                 </td>
                 <td>
-                    <input class="form-check-input" type="checkbox" value="${item.id}" ${checked}>
+                    <input class="form-check-input chk-status" type="checkbox" value="${item.id}" ${checked}>
                 </td>
                 <td>
                     <a href="detail.html?id=${item.id}" class="btn btn-sm btn-info">View</a>
@@ -66,13 +65,50 @@ elArticles.addEventListener('click', (e) => {
                 tr.remove();
                 Toastify({
 
-                    text: "Xóa bài viết thành công",
+
+                    text: showNotify(`Xóa bài viết "${id}" thành công!`),
 
                     duration: 3000
 
                 }).showToast();
             });
         }
+
+    }
+
+    if (el.classList.contains('chk-status')) {
+        const id = el.value;
+        const status = el.checked ? 1 : 0;
+
+        API.patch(`articles/${id}`, { status }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        }).then(res => {
+            showNotify(`Thay đổi trạng thái của bài viết "${id} thành công!`)
+        })
+    }
+
+
+
+});
+
+
+elArticles.addEventListener('change', (e) => {
+    const el = e.target;
+    if (el.classList.contains('slb-category')) {
+        const categoryId = el.value;
+        const id = el.parentElement.dataset.id;
+
+        API.patch(`articles/${id}`, { category_id: categoryId }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        }).then(res => {
+            showNotify(`Thay đổi danh mục của bài viết "${id} thành công!`)
+        })
+
+
     }
 })
 
@@ -145,9 +181,15 @@ function renderSlbCategory(categoryId) {
     });
 
     return `
-
-    <select class="form-select">
-        ${htmlCategories    }
-     </select>
+        <select class="form-select slb-category"> ${htmlCategories} </select>
     `
+}
+
+
+
+function showNotify(message) {
+    Toastify({
+        text: message,
+        duration: 3000
+    }).showToast();
 }
