@@ -28,8 +28,8 @@ class Footer extends HTMLElement {
                     <div class="col-md-4 col-lg-3">
                         <div class="widget">
                             <h4 class="widget-title text-white mb-3">Get in Touch</h4>
-                            <address class="pe-xl-15 pe-xxl-17">Moonshine St. 14/05 Light City, London, United Kingdom</address>
-                            <a href="mailto:#">info@email.com</a><br /> 00 (123) 456 78 90
+                            <address class="pe-xl-15 pe-xxl-17">372 Cách Mạng Tháng 8 Phường 10 Quận 3</address>
+                            <a href="mailto:#">nguyenthanhdat291000@gmail.com</a><br /> 0817335593
                         </div>
                         <!-- /.widget -->
                     </div>
