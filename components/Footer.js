@@ -15,8 +15,8 @@ class Footer extends HTMLElement {
                             <p class="mb-4">© 2023 Sandbox. <br class="d-none d-lg-block" />All rights reserved.</p>
                             <nav class="nav social social-white">
                                 <a href="#"><i class="uil uil-twitter"></i></a>
-                                <a href="#"><i class="uil uil-facebook-f"></i></a>
-                                <a href="#"><i class="uil uil-dribbble"></i></a>
+                                <a href="https://www.facebook.com/profile.php?id=100011424301419"><i class="uil uil-facebook-f"></i></a>
+                                <a href="https://github.com/nguyenthanhdat2910"><i class="uil uil-github"></i></a>
                                 <a href="#"><i class="uil uil-instagram"></i></a>
                                 <a href="#"><i class="uil uil-youtube"></i></a>
                             </nav>
@@ -29,7 +29,7 @@ class Footer extends HTMLElement {
                         <div class="widget">
                             <h4 class="widget-title text-white mb-3">Get in Touch</h4>
                             <address class="pe-xl-15 pe-xxl-17">372 Cách Mạng Tháng 8 Phường 10 Quận 3</address>
-                            <a href="mailto:#">nguyenthanhdat291000@gmail.com</a><br /> 0817335593
+                            <a href="mailto:#">nguyenthanhdat291000@gmail.com</a><br />
                         </div>
                         <!-- /.widget -->
                     </div>
