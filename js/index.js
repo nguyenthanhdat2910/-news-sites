@@ -2,12 +2,15 @@ const elArticlesLatest = document.getElementById('articles-latest');
 const elArticlesPopular = document.getElementById('articles-popular');
 const elImageList = document.getElementById('image-list');
 const btnLoadMore = document.getElementById('btn-load-more');
+const elArticlesViewed = document.getElementById('articles-viewed');
 
 
 let currentPage = 1;
 
 
 fetchArticlesLatest();
+
+renderArticlesViewed();
 
 API.get('articles/popular?limit=7')
     .then((res) => {
@@ -98,7 +101,7 @@ function renderArticlesLatest(items) {
             <div class="card-footer">
                 <ul class="post-meta d-flex mb-0">
                     <li class="post-date"><i class="uil uil-calendar-alt"></i><span>${publishDateFormatted}</span></li>
-                    <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>${item.views}</a></li>
+                    <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>5</a></li>
                     <li class="post-likes ms-auto"><a href="#"><i class="uil uil-heart-alt"></i>${item.status}</a></li>
                 </ul>
                 <!-- /.post-meta -->
@@ -123,4 +126,14 @@ function fetchArticlesLatest(page = 1) {
             renderArticlesLatest(data);
         });
 
+}
+
+function renderArticlesViewed() {
+    const ARTICLES_VIEW = JSON.parse(localStorage.getItem('ARTICLES_VIEW')) || [];
+    let html = '';
+    ARTICLES_VIEW.forEach(item => {
+        html += ` <li><a href="detail.html?id=${item.id}">${item.title}</a></li>`
+    });
+
+    elArticlesViewed.innerHTML = html;
 }

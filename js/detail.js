@@ -26,4 +26,20 @@ API.get(`articles/${id}`)
         elImg.src = item.thumb
         elContent.innerHTML = item.content
         document.getElementById('page-loader').remove();
-    });
+
+
+        const ARTICLES_VIEW = JSON.parse(localStorage.getItem('ARTICLES_VIEW')) || [];
+        const foundIdx = ARTICLES_VIEW.findIndex(itemArticle => itemArticle.id === id);
+        if (foundIdx === -1) {
+
+            if (ARTICLES_VIEW.length >= 4) ARTICLES_VIEW.shift();
+
+            ARTICLES_VIEW.push({ id: id, title: item.title });
+            localStorage.setItem('ARTICLES_VIEW', JSON.stringify(ARTICLES_VIEW));
+        }
+
+
+
+    }).catch(err => {
+        window.location.href = '404.html'
+    })
